@@ -63,7 +63,10 @@ class _DialogManagerState extends State<DialogManager> {
         return await showDialog(
             context: context,
             builder: (context) {
-              return widget;
+              return Material(
+                color: Colors.black.withOpacity(.45),
+                child: widget,
+              );
             });
       case DialogType.pageDialog:
         await showGeneralDialog(
