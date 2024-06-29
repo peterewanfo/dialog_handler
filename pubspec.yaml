@@ -1,10 +1,10 @@
 name: dialog_handler
-description: "A new Flutter package project."
-version: 0.0.1
-homepage:
+description: "A Flutter package that helps simplify the use of dialogs"
+version: 1.0.0
+repository: https://github.com/peterewanfo/dialog_handler.git
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: '>=3.2.6 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
