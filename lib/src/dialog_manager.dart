@@ -36,8 +36,7 @@ class _DialogManagerState extends State<DialogManager> {
   }
 
   bool isOverlayDialog(DialogConfig dMemory) {
-    return (dMemory.dialogType == DialogType.overlayDialog) ||
-        (dMemory.dialogType == DialogType.transparentInteractableDialog);
+    return (dMemory.dialogType == DialogType.overlayDialog);
   }
 
   void animatedDismissal() {
