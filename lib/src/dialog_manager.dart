@@ -9,12 +9,10 @@ import 'widgets_wrappers/custom_animated_widget.dart';
 
 class DialogManager extends StatefulWidget {
   final Widget child;
-  final GlobalKey<NavigatorState> navigatorKey;
 
   const DialogManager({
     super.key,
     required this.child,
-    required this.navigatorKey,
   });
 
   @override
@@ -49,7 +47,7 @@ class _DialogManagerState extends State<DialogManager> {
       } else {
         /// Close Dialog
         /// Return false inorder to handle dialogs clicked on background
-        Navigator.of(widget.navigatorKey.currentContext!).pop(false);
+        Navigator.of(context).pop(false);
       }
     }
   }
@@ -134,14 +132,14 @@ class _DialogManagerState extends State<DialogManager> {
   }
 
   void showDialogContent({
-    required Widget customWidget,
+    required Widget widget,
     required DialogConfig dialogConfig,
   }) async {
     switch (dialogConfig.dialogType) {
       case DialogType.bottomSheetDialog:
         if (mounted) {
           await showModalBottomSheet(
-              context: widget.navigatorKey.currentContext!,
+              context: context,
               builder: (context) {
                 return CustomAnimatedWidget(
                   widget: widget,
@@ -172,7 +170,7 @@ class _DialogManagerState extends State<DialogManager> {
 
         if (mounted) {
           await showGeneralDialog(
-            context: widget.navigatorKey.currentContext!,
+            context: context,
             barrierDismissible: false,
             transitionDuration: dialogConfig.animationDuration ?? Duration.zero,
             pageBuilder: (context, __, ___) {
@@ -223,7 +221,7 @@ class _DialogManagerState extends State<DialogManager> {
       case DialogType.pageDialog:
         if (mounted) {
           await showGeneralDialog(
-            context: widget.navigatorKey.currentContext!,
+            context: context,
             barrierDismissible: false,
             pageBuilder: (context, __, ___) {
               return Material(
@@ -306,7 +304,7 @@ class _DialogManagerState extends State<DialogManager> {
 
       default:
         return await showDialog(
-          context: widget.navigatorKey.currentContext!,
+          context: context,
           builder: (context) {
             return const Text("Dialog Config does not exist");
           },

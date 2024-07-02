@@ -13,7 +13,7 @@ class DialogHandler {
   }
 
   late Function({
-    required Widget customWidget,
+    required Widget widget,
     required DialogConfig dialogConfig,
   }) _showDialogListener;
 
@@ -25,7 +25,7 @@ class DialogHandler {
   /// Register a callback function to show dialog
   void registerDialogListener(
       Function({
-        required Widget customWidget,
+        required Widget widget,
         required DialogConfig dialogConfig,
       }) showDialog) {
     _showDialogListener = showDialog;
@@ -36,7 +36,7 @@ class DialogHandler {
     Duration? animationDuration,
     Duration? animationReverseDuration,
     AnimationType? animationType,
-    required Widget customWidget,
+    required Widget widget,
     bool? onlyDismissProgrammatically,
     Widget? backgroundWidget,
     AlignmentGeometry dialogAlignment = AlignmentDirectional.center,
@@ -57,7 +57,7 @@ class DialogHandler {
     _dialogMemory.push(dialogConfig);
 
     /// Execute `_showDialogListener` on function call
-    _showDialogListener(customWidget: customWidget, dialogConfig: dialogConfig);
+    _showDialogListener(widget: widget, dialogConfig: dialogConfig);
 
     return dialogConfig.dialogCompleterInstance!.future;
   }

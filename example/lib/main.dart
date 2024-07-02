@@ -41,7 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DialogManager(
-      navigatorKey: navigatorKey,
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Dialog Examples"),
@@ -80,11 +79,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.bottomSheetDialog,
-                      customWidget: InkWell(
+                      widget: InkWell(
                         onTap: () async {
                           await DialogHandler.instance.showDialog(
                             dialogType: DialogType.bottomSheetDialog,
-                            customWidget: Container(
+                            widget: Container(
                               height: 200,
                               color: Colors.blue,
                             ),
@@ -113,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.modalDialog,
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -135,7 +134,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.modalDialog,
-                      customWidget: const ModalDialogWithBlurWidget(),
+                      widget: const ModalDialogWithBlurWidget(),
                       backgroundWidget: GlassContainer.clearGlass(
                         borderWidth: 0,
                         blur: 7,
@@ -161,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.pageDialog,
-                      customWidget: InkWell(
+                      widget: InkWell(
                         onTap: () {
                           DialogHandler.instance.dismissDialog();
                         },
@@ -207,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.scaleToPosition,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -231,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.fromTopToPosition,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -256,7 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationType: AnimationType.fromTopToPosition,
                       dialogAlignment: Alignment.topCenter,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -280,7 +279,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.fromBottomToPosition,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -304,7 +303,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.fromLeftToPosition,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -328,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.fromRightToPosition,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ModalDialogWidget(),
+                      widget: const ModalDialogWidget(),
                     );
                   },
                   child: const Text(
@@ -365,7 +364,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationType: AnimationType.fromTopToPosition,
                       dialogAlignment: Alignment.topCenter,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ErrorDialogWidgetExample(),
+                      widget: const ErrorDialogWidgetExample(),
                     );
                   },
                   child: const Text(
@@ -392,7 +391,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationDuration: const Duration(milliseconds: 1200),
                       animationReverseDuration:
                           const Duration(milliseconds: 550),
-                      customWidget: const ErrorDialogWidgetExample(),
+                      widget: const ErrorDialogWidgetExample(),
                     );
                   },
                   child: const Text(
@@ -419,7 +418,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationDuration: const Duration(milliseconds: 1200),
                       animationReverseDuration:
                           const Duration(milliseconds: 550),
-                      customWidget: const ErrorDialogWidgetExample(),
+                      widget: const ErrorDialogWidgetExample(),
                       autoDismissalDuration: const Duration(seconds: 2),
                     );
                   },
@@ -459,7 +458,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationDuration: const Duration(milliseconds: 400),
                       animationReverseDuration:
                           const Duration(milliseconds: 400),
-                      customWidget: const ErrorDialogWidgetExample(),
+                      widget: const ErrorDialogWidgetExample(),
                       autoDismissalDuration: const Duration(seconds: 2),
                     );
                   },
@@ -485,7 +484,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationType: AnimationType.fromTopToPositionThenBounce,
                       dialogAlignment: Alignment.topCenter,
                       animationDuration: const Duration(milliseconds: 300),
-                      customWidget: const ErrorDialogWidgetExample(),
+                      widget: const ErrorDialogWidgetExample(),
                       autoDismissalDuration: const Duration(seconds: 2),
                     );
                     Future.delayed(const Duration(seconds: 1));
@@ -496,7 +495,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animationDuration: const Duration(milliseconds: 1400),
                       animationReverseDuration:
                           const Duration(milliseconds: 1400),
-                      customWidget: const ErrorDialogWidgetExample(),
+                      widget: const ErrorDialogWidgetExample(),
                       autoDismissalDuration: const Duration(seconds: 4),
                     );
                   },
