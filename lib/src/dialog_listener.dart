@@ -5,7 +5,6 @@ import '../dialog_handler.dart';
 final DialogListener dialogListener = DialogListener();
 
 class DialogListener {
-  // final List<VoidCallback> _listeners = [];
   final Map<String, VoidCallback> _listeners = {};
   late DialogConfig? config;
 
@@ -21,20 +20,15 @@ class DialogListener {
 
   void addListener(String key, VoidCallback listener) {
     _listeners[key] = listener;
-    // _listeners.add(listener);
   }
 
   void removeListener(String key) {
     _listeners.remove(key);
-    // _listeners.remove(listener);
   }
 
   void _notifyListeners(String key) {
     if (_listeners.containsKey(key)) {
       _listeners[key]!();
     }
-    // for (final listener in _listeners) {
-    //   listener();
-    // }
   }
 }

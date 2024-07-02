@@ -16,6 +16,7 @@ class DialogConfig {
   final AlignmentGeometry dialogAlignment;
   final Duration? autoDismissalDuration;
   final OverlayEntry? dialogOverlayEntry;
+  final BuildContext? buildContext;
 
   DialogConfig({
     required this.onlyDismissProgrammatically,
@@ -28,6 +29,7 @@ class DialogConfig {
     this.dialogAlignment = AlignmentDirectional.topStart,
     this.autoDismissalDuration,
     this.dialogOverlayEntry,
+    this.buildContext,
   });
 
   factory DialogConfig.initialize({
@@ -40,6 +42,7 @@ class DialogConfig {
     required AlignmentGeometry dialogAlignment,
     Duration? autoDismissalDuration,
     OverlayEntry? dialogOverlayEntry,
+    BuildContext? buildContext,
   }) {
     /// Pass a new dialog completer instance when a dialog is created
     return DialogConfig(
@@ -53,6 +56,7 @@ class DialogConfig {
       dialogAlignment: dialogAlignment,
       autoDismissalDuration: autoDismissalDuration,
       dialogOverlayEntry: dialogOverlayEntry,
+      buildContext: buildContext,
     );
   }
 
@@ -67,6 +71,7 @@ class DialogConfig {
     AlignmentGeometry? dialogAlignment,
     Duration? autoDismissalDuration,
     OverlayEntry? dialogOverlayEntry,
+    BuildContext? buildContext,
   }) {
     /// Pass a new dialog completer instance when a dialog is created
     return DialogConfig(
@@ -83,6 +88,7 @@ class DialogConfig {
       autoDismissalDuration:
           autoDismissalDuration ?? this.autoDismissalDuration,
       dialogOverlayEntry: dialogOverlayEntry ?? this.dialogOverlayEntry,
+      buildContext: buildContext ?? this.buildContext,
     );
   }
 

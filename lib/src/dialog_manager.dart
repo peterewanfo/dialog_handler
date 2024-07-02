@@ -9,10 +9,12 @@ import 'widgets_wrappers/custom_animated_widget.dart';
 
 class DialogManager extends StatefulWidget {
   final Widget child;
+  final GlobalKey<NavigatorState> navigatorKey;
 
   const DialogManager({
     super.key,
     required this.child,
+    required this.navigatorKey,
   });
 
   @override
@@ -22,6 +24,7 @@ class DialogManager extends StatefulWidget {
 class _DialogManagerState extends State<DialogManager> {
   late DialogHandler _dialogHandler;
   OverlayEntry? _overlayEntry;
+  
 
   @override
   void initState() {
@@ -44,7 +47,9 @@ class _DialogManagerState extends State<DialogManager> {
       if (isOverlayDialog(dialogListener.config!)) {
         dialogListener.config!.dialogOverlayEntry?.remove();
       } else {
-        Navigator.of(context).pop(false);
+        /// Close Dialog
+        /// Return false inorder to handle dialogs clicked on background
+        Navigator.of(widget.navigatorKey.currentContext!).pop(false);
       }
     }
   }
@@ -128,50 +133,15 @@ class _DialogManagerState extends State<DialogManager> {
     }
   }
 
-  // static void timerCountDismissal(List<dynamic> args) {
-  //   SendPort sendPort = args[0];
-  //   Duration autoDismissalDuration = args[1]["autoDismissalDuration"];
-  //   Future.delayed(autoDismissalDuration).then(
-  //     (value) {
-  //       sendPort.send("execute");
-  //     },
-  //   );
-  // }
-
-  // Future<void> dismissDialogIsolate({
-  //   required Duration autoDismissalDuration,
-  //   DialogConfig? dialogConfigToDelete,
-  // }) async {
-  //   ReceivePort receivePort = ReceivePort();
-  //   await Isolate.spawn(timerCountDismissal, [
-  //     receivePort.sendPort,
-  //     {
-  //       "autoDismissalDuration": autoDismissalDuration,
-  //     },
-  //   ]);
-
-  //   receivePort.listen((message) {
-  //     if (message == "execute") {
-  //       dismissDialog(dialogConfigToDelete: dialogConfigToDelete);
-  //     }
-  //   });
-  // }
-
   void showDialogContent({
-    required Widget widget,
+    required Widget customWidget,
     required DialogConfig dialogConfig,
   }) async {
     switch (dialogConfig.dialogType) {
       case DialogType.bottomSheetDialog:
-        // if (dialogConfig.autoDismissalDuration != null) {
-        //   await dismissDialogIsolate(
-        //     autoDismissalDuration: dialogConfig.autoDismissalDuration!,
-        //     dialogConfigToDelete: dialogConfig,
-        //   );
-        // }
         if (mounted) {
           await showModalBottomSheet(
-              context: context,
+              context: widget.navigatorKey.currentContext!,
               builder: (context) {
                 return CustomAnimatedWidget(
                   widget: widget,
@@ -199,16 +169,10 @@ class _DialogManagerState extends State<DialogManager> {
         }
 
       case DialogType.modalDialog:
-        // if (dialogConfig.autoDismissalDuration != null) {
-        //   await dismissDialogIsolate(
-        //     autoDismissalDuration: dialogConfig.autoDismissalDuration!,
-        //     dialogConfigToDelete: dialogConfig,
-        //   );
-        // }
 
         if (mounted) {
           await showGeneralDialog(
-            context: context,
+            context: widget.navigatorKey.currentContext!,
             barrierDismissible: false,
             transitionDuration: dialogConfig.animationDuration ?? Duration.zero,
             pageBuilder: (context, __, ___) {
@@ -254,69 +218,12 @@ class _DialogManagerState extends State<DialogManager> {
               }
             },
           );
-          // await showGeneralDialog(
-          //   context: context,
-          //   barrierDismissible: false,
-          //   transitionDuration: dialogConfig.animationDuration ?? Duration.zero,
-          //   transitionBuilder: (
-          //     BuildContext context,
-          //     Animation<double> primaryAnimation,
-          //     Animation<double> secondaryAnimation,
-          //     Widget child,
-          //   ) =>
-          //       CustomAnimatedWidget(
-          //     onAutoDismissal: () {
-          //       dismissDialog();
-          //     },
-          //     dialogConfig: dialogConfig,
-          //     animation: primaryAnimation,
-          //     animationType:
-          //         dialogConfig.animationType ?? AnimationType.scaleToPosition,
-          //     child: child,
-          //   ),
-          //   pageBuilder: (context, __, ___) {
-          //     return Material(
-          //       color: Colors.transparent,
-          //       child: InkWell(
-          //         onTap: () {
-          //           if (dialogConfig.autoDismissalDuration == null) {
-          //             dismissDialog();
-          //           }
-          //         },
-          //         child: Stack(
-          //           alignment: dialogConfig.dialogAlignment,
-          //           children: [
-          //             if (dialogConfig.backgroundWidget != null)
-          //               dialogConfig.backgroundWidget!,
-          //             widget,
-          //           ],
-          //         ),
-          //       ).noShadow,
-          //     );
-          //   },
-          // ).then(
-          //   (value) async {
-          //     if (value == null) {
-          //       if (dialogConfig.autoDismissalDuration == null) {
-          //         dismissDialog(
-          //           isDialogSelfDismissed: true,
-          //         );
-          //       }
-          //     }
-          //   },
-          // );
         }
 
       case DialogType.pageDialog:
-        // if (dialogConfig.autoDismissalDuration != null) {
-        //   await dismissDialogIsolate(
-        //     autoDismissalDuration: dialogConfig.autoDismissalDuration!,
-        //     dialogConfigToDelete: dialogConfig,
-        //   );
-        // }
         if (mounted) {
           await showGeneralDialog(
-            context: context,
+            context: widget.navigatorKey.currentContext!,
             barrierDismissible: false,
             pageBuilder: (context, __, ___) {
               return Material(
@@ -332,7 +239,6 @@ class _DialogManagerState extends State<DialogManager> {
                           int index = DialogHandler.dialogMemory()
                               .getDialogIndex(value: dialogConfig);
                           dismissDialog(
-                            // dialogConfigToDelete: dialogConfig,
                             dialogConfigIndexToDelete: index,
                           );
                         },
@@ -354,46 +260,6 @@ class _DialogManagerState extends State<DialogManager> {
             },
           );
         }
-      // case DialogType.transparentInteractableDialog:
-      //   _overlayEntry = OverlayEntry(
-      //     builder: (context) => PopScope(
-      //       canPop: false,
-      //       onPopInvoked: (didPop) async {
-      //         if (didPop) {
-      //           return;
-      //         }
-      //       },
-      //       child: Material(
-      //         color: Colors.black.withOpacity(.65),
-      //         child: InkWell(
-      //           child: StandaloneWidget(
-      //             widget: Stack(
-      //               alignment: dialogConfig.dialogAlignment,
-      //               children: [
-      //                 if (dialogConfig.backgroundWidget != null)
-      //                   dialogConfig.backgroundWidget!,
-      //                 widget,
-      //               ],
-      //             ),
-      //             dialogConfig: dialogConfig,
-      //             onAutoDismissal: () {
-      //               dismissDialog();
-      //             },
-      //           ),
-      //         ).noShadow,
-      //       ),
-      //     ),
-      //   );
-      //   if (_overlayEntry != null) {
-      //     Overlay.of(context).insert(_overlayEntry!);
-      //   }
-
-      // if (dialogConfig.autoDismissalDuration != null) {
-      //   await dismissDialogIsolate(
-      //     autoDismissalDuration: dialogConfig.autoDismissalDuration!,
-      //     dialogConfigToDelete: dialogConfig,
-      //   );
-      // }
 
       case DialogType.overlayDialog:
         _overlayEntry = OverlayEntry(
@@ -438,16 +304,9 @@ class _DialogManagerState extends State<DialogManager> {
         DialogHandler.dialogMemory()
             .update(preValue: dialogConfig, newValue: idialogConfig);
 
-      // if (idialogConfig.autoDismissalDuration != null) {
-      //   await dismissDialogIsolate(
-      //     autoDismissalDuration: idialogConfig.autoDismissalDuration!,
-      //     dialogConfigToDelete: idialogConfig,
-      //   );
-      // }
-
       default:
         return await showDialog(
-          context: context,
+          context: widget.navigatorKey.currentContext!,
           builder: (context) {
             return const Text("Dialog Config does not exist");
           },
