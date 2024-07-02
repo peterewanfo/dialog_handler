@@ -5,10 +5,16 @@ class ModalDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      height: 300,
-      width: double.infinity,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          color: Colors.red,
+          height: 300,
+          width: double.infinity,
+        ),
+      ],
     );
   }
 }
