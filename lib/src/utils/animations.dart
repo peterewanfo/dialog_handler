@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Animations {
+  /// fade dialog while dialog slide from right to position
   static Widget fadeFromRightToPosition(
     Animation<double> animation,
     Widget child,
@@ -22,6 +23,7 @@ class Animations {
     );
   }
 
+  /// fade dialog while dialog slide from left to position
   static Widget fadeFromLeftToPosition(
     Animation<double> animation,
     Widget child,
@@ -43,6 +45,7 @@ class Animations {
     );
   }
 
+  /// fade dialog while dialog slide from top to position
   static Widget fadeFromTopToPosition(
     Animation<double> animation,
     Widget child,
@@ -64,6 +67,7 @@ class Animations {
     );
   }
 
+  /// fade dialog while dialog slide from bottom to position
   static Widget fadeFromBottomToPosition(
     Animation<double> animation,
     Widget child,
@@ -85,6 +89,7 @@ class Animations {
     );
   }
 
+  /// slide dialog from right to position
   static Widget fromRightToPosition(
     Animation<double> animation,
     Widget child,
@@ -103,6 +108,7 @@ class Animations {
     );
   }
 
+  /// slide dialog from left to position
   static Widget fromLeftToPosition(
     Animation<double> animation,
     Widget child,
@@ -121,6 +127,7 @@ class Animations {
     );
   }
 
+  /// slide dialog from top to position
   static Widget fromTopToPosition(
     Animation<double> animation,
     Widget child,
@@ -139,6 +146,7 @@ class Animations {
     );
   }
 
+  /// slide dialog from bottom to position
   static Widget fromBottomToPosition(
     Animation<double> animation,
     Widget child,
@@ -157,6 +165,7 @@ class Animations {
     );
   }
 
+  /// slide dialog from top to position then bounce
   static Widget fromTopToPositionThenBounce(
     Animation<double> animation,
     Widget child,
@@ -176,6 +185,7 @@ class Animations {
     );
   }
 
+  /// slide dialog from bottom to position then bounce
   static Widget fromBottomToPositionThenBounce(
     Animation<double> animation,
     Widget child,
@@ -195,6 +205,7 @@ class Animations {
     );
   }
 
+  /// scale dialog to position
   static Widget scaleToPosition(
     Animation<double> animation,
     Widget child,

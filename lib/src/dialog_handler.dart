@@ -31,6 +31,21 @@ class DialogHandler {
     _showDialogListener = showDialog;
   }
 
+  /// To display a dialog.
+  ///
+  /// [dialogType] to identify the desired dialog type for display
+  /// it can either be bottomSheetDialog, modalDialog, overlayDialog and others
+  ///
+  /// [animationDuration] though nullable, is used to specify duration of a dialog animation on appearance
+  ///
+  /// [animationReverseDuration] though nullable, is used to specify duration of a dialog animation on dismiss
+  ///
+  /// [onlyDismissProgrammatically] when false, dialog cannot be dismissed on background click but can only be dismissed programatically
+  ///
+  /// [autoDismissalDuration] when supplied, specifies the duration of a dialog before it is automatically dismissed.
+  /// 
+  /// [backgroundWidget] to specify widget to be displayed on dialog background.
+  /// 
   Future<Map<String, dynamic>> showDialog({
     required DialogType dialogType,
     Duration? animationDuration,
@@ -90,6 +105,8 @@ class DialogHandler {
   }
 }
 
+/// To keep record of dialogs on display, important for nexted dialogs
+/// 
 class DialogStack<T> {
   final _list = <T>[];
 

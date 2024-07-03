@@ -1,5 +1,5 @@
 name: dialog_handler
-description: "A Flutter package that helps simplify the use of dialogs"
+description: "A Flutter package that helps simplify the use of different dialogs and handle dialog animations"
 version: 1.0.0
 repository: https://github.com/peterewanfo/dialog_handler.git
 
