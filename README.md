@@ -5,11 +5,11 @@ A Flutter package that helps simplify the use of dialogs.
 # Why use dialog handler?
 As your app grows, with multiple dialogs implemented in your app, you will need a way to handle, display and dismiss all variations of dialogs and overlays based on the following cases.
 
-* You want to display dialog directly from your business layer without passing context
+* You want to display dialog directly from your business layer without injecting context from View
 * You dont just want your dialog/overlays to appear plain but instead apear animated.
-* After you dismiss a dialog, you want to return transaction responses to the dialog caller object.
+* After you dismiss a dialog, you want to return transaction responses to the dialog caller object.a
 * You want nested dialogs (ability to open another dialog from a dialog) without closing the previous dialog.
-* You need to easily mock messages in business logic that appears in dialogs.
+* You need to easily mock dialogs during test.
 * You want to autodismiss a dialog after a Duration
 
 These are use cases that will require you to use this package. Below you will find a handfull of examples that may suite your need.

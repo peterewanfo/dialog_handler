@@ -22,7 +22,6 @@ class DialogManager extends StatefulWidget {
 class _DialogManagerState extends State<DialogManager> {
   late DialogHandler _dialogHandler;
   OverlayEntry? _overlayEntry;
-  
 
   @override
   void initState() {
@@ -167,7 +166,6 @@ class _DialogManagerState extends State<DialogManager> {
         }
 
       case DialogType.modalDialog:
-
         if (mounted) {
           await showGeneralDialog(
             context: context,
@@ -269,24 +267,19 @@ class _DialogManagerState extends State<DialogManager> {
                   dialogConfig.backgroundWidget!,
                 Material(
                   color: Colors.transparent,
-                  child: InkWell(
-                    onTap: () {
-                      dismissDialog();
+                  child: CustomAnimatedWidget(
+                    widget: widget,
+                    dialogConfig: dialogConfig,
+                    animationType: dialogConfig.animationType,
+                    onDismissal: () {
+                      int index = DialogHandler.dialogMemory()
+                          .getDialogIndex(value: dialogConfig);
+                      dismissDialog(
+                        // dialogConfigToDelete: dialogConfig,
+                        dialogConfigIndexToDelete: index,
+                      );
                     },
-                    child: CustomAnimatedWidget(
-                      widget: widget,
-                      dialogConfig: dialogConfig,
-                      animationType: dialogConfig.animationType,
-                      onDismissal: () {
-                        int index = DialogHandler.dialogMemory()
-                            .getDialogIndex(value: dialogConfig);
-                        dismissDialog(
-                          // dialogConfigToDelete: dialogConfig,
-                          dialogConfigIndexToDelete: index,
-                        );
-                      },
-                    ),
-                  ).noShadow,
+                  ),
                 ),
               ],
             );
