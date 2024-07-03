@@ -4,4 +4,4 @@
 
 ## 1.0.0+1
 
-* init release
+* added documentation
