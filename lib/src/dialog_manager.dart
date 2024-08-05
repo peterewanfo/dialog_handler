@@ -139,6 +139,7 @@ class _DialogManagerState extends State<DialogManager> {
         if (mounted) {
           await showModalBottomSheet(
               context: context,
+              isScrollControlled: true,
               builder: (context) {
                 return CustomAnimatedWidget(
                   widget: widget,
