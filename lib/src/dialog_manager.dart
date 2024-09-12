@@ -140,6 +140,7 @@ class _DialogManagerState extends State<DialogManager> {
           await showModalBottomSheet(
               context: context,
               isScrollControlled: true,
+              backgroundColor: Colors.transparent,
               builder: (context) {
                 return CustomAnimatedWidget(
                   widget: widget,
