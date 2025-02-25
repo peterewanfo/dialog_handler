@@ -56,6 +56,7 @@ class DialogHandler {
     Widget? backgroundWidget,
     AlignmentGeometry dialogAlignment = AlignmentDirectional.center,
     Duration? autoDismissalDuration,
+    bool? autoDismissWithAnimation,
   }) {
     DialogConfig dialogConfig = DialogConfig.initialize(
       onlyDismissProgrammatically: onlyDismissProgrammatically ?? false,
@@ -66,6 +67,7 @@ class DialogHandler {
       animationType: animationType,
       dialogAlignment: dialogAlignment,
       autoDismissalDuration: autoDismissalDuration,
+      autoDismissWithAnimation: autoDismissWithAnimation,
     );
 
     /// Add New Dialog to Stack

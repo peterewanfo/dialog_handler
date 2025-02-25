@@ -206,6 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.scaleToPosition,
                       animationDuration: const Duration(milliseconds: 300),
+                      autoDismissWithAnimation: false,
                       widget: const ModalDialogWidget(),
                     );
                   },

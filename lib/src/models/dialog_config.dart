@@ -34,6 +34,7 @@ class DialogConfig {
   final AnimationType? animationType;
   final AlignmentGeometry dialogAlignment;
   final Duration? autoDismissalDuration;
+  final bool? autoDismissWithAnimation;
   final OverlayEntry? dialogOverlayEntry;
 
   DialogConfig({
@@ -46,6 +47,7 @@ class DialogConfig {
     this.animationType,
     this.dialogAlignment = AlignmentDirectional.topStart,
     this.autoDismissalDuration,
+    this.autoDismissWithAnimation = true,
     this.dialogOverlayEntry,
   });
 
@@ -58,6 +60,7 @@ class DialogConfig {
     AnimationType? animationType,
     required AlignmentGeometry dialogAlignment,
     Duration? autoDismissalDuration,
+    bool? autoDismissWithAnimation,
     OverlayEntry? dialogOverlayEntry,
   }) {
     /// Pass a new dialog completer instance when a dialog is created
@@ -71,6 +74,7 @@ class DialogConfig {
       animationType: animationType,
       dialogAlignment: dialogAlignment,
       autoDismissalDuration: autoDismissalDuration,
+      autoDismissWithAnimation: autoDismissWithAnimation,
       dialogOverlayEntry: dialogOverlayEntry,
     );
   }
@@ -85,6 +89,7 @@ class DialogConfig {
     AnimationType? animationType,
     AlignmentGeometry? dialogAlignment,
     Duration? autoDismissalDuration,
+    bool? autoDismissWithAnimation,
     OverlayEntry? dialogOverlayEntry,
   }) {
     /// Pass a new dialog completer instance when a dialog is created
@@ -101,6 +106,7 @@ class DialogConfig {
       dialogAlignment: dialogAlignment ?? this.dialogAlignment,
       autoDismissalDuration:
           autoDismissalDuration ?? this.autoDismissalDuration,
+      autoDismissWithAnimation: autoDismissWithAnimation ?? this.autoDismissWithAnimation,
       dialogOverlayEntry: dialogOverlayEntry ?? this.dialogOverlayEntry,
     );
   }
