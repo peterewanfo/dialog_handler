@@ -33,7 +33,13 @@ class _CustomAnimatedWidgetState extends State<CustomAnimatedWidget>
       if (dialogListener.config != null) {
         if (dialogListener.config!.dialogCompleterInstance ==
             widget.dialogConfig.dialogCompleterInstance) {
-          _animationController.reverse();
+          if (widget.dialogConfig.autoDismissWithAnimation == true) {
+            _animationController.reverse();
+            // _animationController.animateBack(0, duration: Duration.zero);
+          } else {
+            // _animationController.reverse();
+            _animationController.animateBack(0, duration: Duration.zero);
+          }
           _animationController.addStatusListener(
             (status) {
               if (status == AnimationStatus.dismissed) {
