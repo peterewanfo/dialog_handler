@@ -5,6 +5,7 @@ import 'package:example/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:dialog_handler/dialog_handler.dart';
 import 'package:glass_kit/glass_kit.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'dialog_widgets/modal_dialog_with_blur_widget.dart';
 
@@ -507,6 +508,55 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ),
+
+                const SizedBox(
+                  height: 10,
+                ),
+
+                /// CUSTOM BOTTOM SHEET EXAMPLE
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                  ),
+                  onPressed: () async {
+                    DialogHandler.instance.showDialog(
+                      dialogType: DialogType.customDialog,
+                      widget: const SizedBox(),
+                      customDialogOnDisplay: (context) {
+                        showCupertinoModalBottomSheet(
+                          elevation: 0,
+                          context: context,
+                          expand: true,
+                          topRadius: Radius.circular(24),
+                          builder: (context) => Container(
+                            height: 500,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.pink,
+                              ),
+                              onPressed: () async {
+                                Navigator.pop(context, true);
+                              },
+                              child: Text(
+                                "Dismiss",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: const Text(
+                    'Auto Dismissal Nested Dialog Example',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+
                 const SizedBox(
                   height: 10,
                 ),

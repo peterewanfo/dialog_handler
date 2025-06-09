@@ -57,6 +57,7 @@ class DialogHandler {
     AlignmentGeometry dialogAlignment = AlignmentDirectional.center,
     Duration? autoDismissalDuration,
     bool? autoDismissWithAnimation,
+    Function(BuildContext context)? customDialogOnDisplay,
   }) {
     DialogConfig dialogConfig = DialogConfig.initialize(
       onlyDismissProgrammatically: onlyDismissProgrammatically ?? false,
@@ -68,6 +69,7 @@ class DialogHandler {
       dialogAlignment: dialogAlignment,
       autoDismissalDuration: autoDismissalDuration,
       autoDismissWithAnimation: autoDismissWithAnimation,
+      customDialogOnDisplay: customDialogOnDisplay,
     );
 
     /// Add New Dialog to Stack

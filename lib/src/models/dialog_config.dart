@@ -36,6 +36,7 @@ class DialogConfig {
   final Duration? autoDismissalDuration;
   final bool? autoDismissWithAnimation;
   final OverlayEntry? dialogOverlayEntry;
+  final Function(BuildContext context)? customDialogOnDisplay;
 
   DialogConfig({
     required this.onlyDismissProgrammatically,
@@ -49,6 +50,7 @@ class DialogConfig {
     this.autoDismissalDuration,
     this.autoDismissWithAnimation = true,
     this.dialogOverlayEntry,
+    this.customDialogOnDisplay,
   });
 
   factory DialogConfig.initialize({
@@ -62,6 +64,7 @@ class DialogConfig {
     Duration? autoDismissalDuration,
     bool? autoDismissWithAnimation,
     OverlayEntry? dialogOverlayEntry,
+    Function(BuildContext context)? customDialogOnDisplay,
   }) {
     /// Pass a new dialog completer instance when a dialog is created
     return DialogConfig(
@@ -76,6 +79,7 @@ class DialogConfig {
       autoDismissalDuration: autoDismissalDuration,
       autoDismissWithAnimation: autoDismissWithAnimation,
       dialogOverlayEntry: dialogOverlayEntry,
+      customDialogOnDisplay: customDialogOnDisplay,
     );
   }
 
@@ -91,6 +95,7 @@ class DialogConfig {
     Duration? autoDismissalDuration,
     bool? autoDismissWithAnimation,
     OverlayEntry? dialogOverlayEntry,
+    Function(BuildContext context)? customDialogOnDisplay,
   }) {
     /// Pass a new dialog completer instance when a dialog is created
     return DialogConfig(
@@ -108,6 +113,7 @@ class DialogConfig {
           autoDismissalDuration ?? this.autoDismissalDuration,
       autoDismissWithAnimation: autoDismissWithAnimation ?? this.autoDismissWithAnimation,
       dialogOverlayEntry: dialogOverlayEntry ?? this.dialogOverlayEntry,
+      customDialogOnDisplay: customDialogOnDisplay ?? this.customDialogOnDisplay,
     );
   }
 

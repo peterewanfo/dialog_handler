@@ -167,6 +167,13 @@ class _DialogManagerState extends State<DialogManager> {
           );
         }
 
+      case DialogType.customDialog:
+        if (mounted) {
+          if (dialogConfig.customDialogOnDisplay != null) {
+            await dialogConfig.customDialogOnDisplay!(context);
+          }
+        }
+
       case DialogType.modalDialog:
         if (mounted) {
           await showGeneralDialog(

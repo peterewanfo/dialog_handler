@@ -8,6 +8,7 @@ enum DialogType {
   bottomSheetDialog,
   modalDialog,
   overlayDialog,
+  customDialog,
 }
 
 /// `AnimationType` Defines Animation transition
