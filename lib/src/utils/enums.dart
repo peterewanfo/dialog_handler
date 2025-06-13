@@ -27,7 +27,7 @@ enum AnimationType {
   fromBottomToPositionThenBounce,
 }
 
-enum DialogListenerKeys{
+enum DialogListenerKeys {
   dismissDialog,
   completedAnimationDismissal,
 }

@@ -5,25 +5,25 @@ import 'package:flutter/material.dart';
 
 import '../utils/_export_.dart';
 
-  /// To hold configurations of dialog instance on display.
-  ///
-  /// [dialogType] to identify the desired dialog type for display
-  /// it can either be bottomSheetDialog, modalDialog, overlayDialog and others
-  ///
-  /// [animationDuration] though nullable, is used to specify duration of a dialog animation on appearance
-  ///
-  /// [animationReverseDuration] though nullable, is used to specify duration of a dialog animation on dismiss
-  ///
-  /// [onlyDismissProgrammatically] when false, dialog cannot be dismissed on background click but can only be dismissed programatically
-  ///
-  /// [autoDismissalDuration] when supplied, specifies the duration of a dialog before it is automatically dismissed.
-  /// 
-  /// [backgroundWidget] to specify widget to be displayed on dialog background.
-  /// 
-  /// [animationType] specifies the type of appearance and dismissal animation for a dialog on display
-  /// `animationType` can be: fadeFromTopToPosition, fadeFromBottomToPosition, fadeFromLeftToPosition, fadeFromRightToPosition, scaleToPosition, fromRightToPosition,
-  /// fromLeftToPosition, fromBottomToPosition, fromTopToPosition, fromTopToPositionThenBounce, fromBottomToPositionThenBounce,
-  /// 
+/// To hold configurations of dialog instance on display.
+///
+/// [dialogType] to identify the desired dialog type for display
+/// it can either be bottomSheetDialog, modalDialog, overlayDialog and others
+///
+/// [animationDuration] though nullable, is used to specify duration of a dialog animation on appearance
+///
+/// [animationReverseDuration] though nullable, is used to specify duration of a dialog animation on dismiss
+///
+/// [onlyDismissProgrammatically] when false, dialog cannot be dismissed on background click but can only be dismissed programatically
+///
+/// [autoDismissalDuration] when supplied, specifies the duration of a dialog before it is automatically dismissed.
+///
+/// [backgroundWidget] to specify widget to be displayed on dialog background.
+///
+/// [animationType] specifies the type of appearance and dismissal animation for a dialog on display
+/// `animationType` can be: fadeFromTopToPosition, fadeFromBottomToPosition, fadeFromLeftToPosition, fadeFromRightToPosition, scaleToPosition, fromRightToPosition,
+/// fromLeftToPosition, fromBottomToPosition, fromTopToPosition, fromTopToPositionThenBounce, fromBottomToPositionThenBounce,
+///
 class DialogConfig {
   final bool onlyDismissProgrammatically;
   final DialogType dialogType;
@@ -106,15 +106,17 @@ class DialogConfig {
           dialogCompleterInstance ?? this.dialogCompleterInstance,
       backgroundWidget: backgroundWidget ?? this.backgroundWidget,
       animationDuration: animationDuration ?? this.animationDuration,
-      animationReverseDuration: animationReverseDuration ?? this.animationReverseDuration,
+      animationReverseDuration:
+          animationReverseDuration ?? this.animationReverseDuration,
       animationType: animationType ?? this.animationType,
       dialogAlignment: dialogAlignment ?? this.dialogAlignment,
       autoDismissalDuration:
           autoDismissalDuration ?? this.autoDismissalDuration,
-      autoDismissWithAnimation: autoDismissWithAnimation ?? this.autoDismissWithAnimation,
+      autoDismissWithAnimation:
+          autoDismissWithAnimation ?? this.autoDismissWithAnimation,
       dialogOverlayEntry: dialogOverlayEntry ?? this.dialogOverlayEntry,
-      customDialogOnDisplay: customDialogOnDisplay ?? this.customDialogOnDisplay,
+      customDialogOnDisplay:
+          customDialogOnDisplay ?? this.customDialogOnDisplay,
     );
   }
-
 }

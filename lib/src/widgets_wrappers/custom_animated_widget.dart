@@ -78,7 +78,7 @@ class _CustomAnimatedWidgetState extends State<CustomAnimatedWidget>
                 }
               }
             });
-          }else{
+          } else {
             _animationController.reverse();
           }
         }

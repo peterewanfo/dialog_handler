@@ -43,9 +43,9 @@ class DialogHandler {
   /// [onlyDismissProgrammatically] when false, dialog cannot be dismissed on background click but can only be dismissed programatically
   ///
   /// [autoDismissalDuration] when supplied, specifies the duration of a dialog before it is automatically dismissed.
-  /// 
+  ///
   /// [backgroundWidget] to specify widget to be displayed on dialog background.
-  /// 
+  ///
   Future<Map<String, dynamic>> showDialog({
     required DialogType dialogType,
     Duration? animationDuration,
@@ -110,7 +110,7 @@ class DialogHandler {
 }
 
 /// To keep record of dialogs on display, important for nexted dialogs
-/// 
+///
 class DialogStack<T> {
   final _list = <T>[];
 
@@ -128,8 +128,10 @@ class DialogStack<T> {
   List<T> get allItems => _list;
 
   int getDialogIndex({required T value}) {
-    int index = _list.indexWhere((v) => (v as DialogConfig).dialogCompleterInstance == (value as DialogConfig).dialogCompleterInstance);
-    
+    int index = _list.indexWhere((v) =>
+        (v as DialogConfig).dialogCompleterInstance ==
+        (value as DialogConfig).dialogCompleterInstance);
+
     return index;
   }
 
