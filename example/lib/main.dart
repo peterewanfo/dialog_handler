@@ -1,6 +1,7 @@
 import 'package:example/dialog_widgets/bottomsheet_dialog_widget.dart';
 import 'package:example/dialog_widgets/error_dialog_widget_example.dart';
 import 'package:example/dialog_widgets/modal_dialog_widget.dart';
+import 'package:example/dialog_widgets/new_device_verification_dialog.dart';
 import 'package:example/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:dialog_handler/dialog_handler.dart';
@@ -527,8 +528,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           elevation: 0,
                           context: context,
                           expand: true,
-                          topRadius: Radius.circular(24),
-                          builder: (context) => Container(
+                          topRadius: const Radius.circular(24),
+                          builder: (context) => SizedBox(
                             height: 500,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
@@ -537,7 +538,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               onPressed: () async {
                                 Navigator.pop(context, true);
                               },
-                              child: Text(
+                              child: const Text(
                                 "Dismiss",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -547,6 +548,44 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         );
                       },
+                    );
+                  },
+                  child: const Text(
+                    'Auto Dismissal Nested Dialog Example',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.pink,
+                  ),
+                  onPressed: () async {
+
+                    DialogHandler.instance.showDialog(
+                      dialogType: DialogType.overlayDialog,
+                      autoDismissWithAnimation: false,
+                      widget: const Center(
+                        child: Text("-------asdf"),
+                      ),
+                    );
+
+                    await Future.delayed(const Duration(seconds: 2));
+                    await DialogHandler.instance.dismissDialog();
+
+                    await DialogHandler.instance.showDialog(
+                      dialogType: DialogType.bottomSheetDialog,
+                      autoDismissWithAnimation: false,
+                      widget: NewDeviceVerificationDialog(
+                        onOkayPressed: () async {
+                          DialogHandler.instance.dismissDialog();
+                        },
+                        onCancelPressed: () async {
+                          DialogHandler.instance.dismissDialog();
+                        },
+                      ),
                     );
                   },
                   child: const Text(

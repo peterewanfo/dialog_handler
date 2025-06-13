@@ -1,6 +1,7 @@
 import 'package:dialog_handler/src/utils/_export_.dart';
 import 'package:dialog_handler/src/utils/extension.dart';
 import 'package:dialog_handler/src/dialog_listener.dart';
+import 'package:dialog_handler/src/widgets_wrappers/custom_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'dialog_handler.dart';
@@ -79,6 +80,7 @@ class _DialogManagerState extends State<DialogManager> {
             dialogCompleterInstance: dMemory.dialogCompleterInstance!,
           );
           if (dMemory.dialogOverlayEntry!.mounted) {
+            // dMemory.dialogOverlayEntry?.remove();
             dialogListener.dismissDialog(dMemory);
             // dMemory.dialogOverlayEntry?.remove();
           }
@@ -142,18 +144,32 @@ class _DialogManagerState extends State<DialogManager> {
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
               builder: (context) {
-                return CustomAnimatedWidget(
-                  widget: widget,
-                  dialogConfig: dialogConfig,
-                  animationType: dialogConfig.animationType,
-                  onDismissal: () {
-                    int index = DialogHandler.dialogMemory()
-                        .getDialogIndex(value: dialogConfig);
-                    dismissDialog(
-                      dialogConfigIndexToDelete: index,
-                    );
-                  },
-                );
+                if (dialogConfig.animationType != null) {
+                  return CustomAnimatedWidget(
+                    widget: widget,
+                    dialogConfig: dialogConfig,
+                    animationType: dialogConfig.animationType,
+                    onDismissal: () {
+                      int index = DialogHandler.dialogMemory()
+                          .getDialogIndex(value: dialogConfig);
+                      dismissDialog(
+                        dialogConfigIndexToDelete: index,
+                      );
+                    },
+                  );
+                } else {
+                  return CustomWidget(
+                    widget: widget,
+                    dialogConfig: dialogConfig,
+                    onDismissal: () {
+                      int index = DialogHandler.dialogMemory()
+                          .getDialogIndex(value: dialogConfig);
+                      dismissDialog(
+                        dialogConfigIndexToDelete: index,
+                      );
+                    },
+                  );
+                }
               }).then(
             (value) async {
               if (value == null) {
@@ -194,19 +210,32 @@ class _DialogManagerState extends State<DialogManager> {
                     children: [
                       if (dialogConfig.backgroundWidget != null)
                         dialogConfig.backgroundWidget!,
-                      CustomAnimatedWidget(
-                        widget: widget,
-                        dialogConfig: dialogConfig,
-                        animationType: dialogConfig.animationType ??
-                            AnimationType.scaleToPosition,
-                        onDismissal: () {
-                          int index = DialogHandler.dialogMemory()
-                              .getDialogIndex(value: dialogConfig);
-                          dismissDialog(
-                            dialogConfigIndexToDelete: index,
-                          );
-                        },
-                      ),
+                      if (dialogConfig.animationType != null)
+                        CustomAnimatedWidget(
+                          widget: widget,
+                          dialogConfig: dialogConfig,
+                          animationType: dialogConfig.animationType ??
+                              AnimationType.scaleToPosition,
+                          onDismissal: () {
+                            int index = DialogHandler.dialogMemory()
+                                .getDialogIndex(value: dialogConfig);
+                            dismissDialog(
+                              dialogConfigIndexToDelete: index,
+                            );
+                          },
+                        ),
+                      if (dialogConfig.animationType == null)
+                        CustomWidget(
+                          widget: widget,
+                          dialogConfig: dialogConfig,
+                          onDismissal: () {
+                            int index = DialogHandler.dialogMemory()
+                                .getDialogIndex(value: dialogConfig);
+                            dismissDialog(
+                              dialogConfigIndexToDelete: index,
+                            );
+                          },
+                        )
                     ],
                   ),
                 ).noShadow,
@@ -231,15 +260,37 @@ class _DialogManagerState extends State<DialogManager> {
             context: context,
             barrierDismissible: false,
             pageBuilder: (context, __, ___) {
-              return Material(
-                color: Colors.black.withOpacity(.45),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: CustomAnimatedWidget(
+              if (dialogConfig.animationType != null) {
+                return Material(
+                  color: Colors.black.withOpacity(.45),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CustomAnimatedWidget(
+                          widget: widget,
+                          dialogConfig: dialogConfig,
+                          animationType: dialogConfig.animationType,
+                          onDismissal: () {
+                            int index = DialogHandler.dialogMemory()
+                                .getDialogIndex(value: dialogConfig);
+                            dismissDialog(
+                              dialogConfigIndexToDelete: index,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return Material(
+                  color: Colors.black.withOpacity(.45),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: CustomWidget(
                         widget: widget,
                         dialogConfig: dialogConfig,
-                        animationType: dialogConfig.animationType,
                         onDismissal: () {
                           int index = DialogHandler.dialogMemory()
                               .getDialogIndex(value: dialogConfig);
@@ -247,11 +298,11 @@ class _DialogManagerState extends State<DialogManager> {
                             dialogConfigIndexToDelete: index,
                           );
                         },
-                      ),
-                    ),
-                  ],
-                ),
-              );
+                      )),
+                    ],
+                  ),
+                );
+              }
             },
           ).then(
             (value) async {
@@ -274,22 +325,39 @@ class _DialogManagerState extends State<DialogManager> {
               children: [
                 if (dialogConfig.backgroundWidget != null)
                   dialogConfig.backgroundWidget!,
-                Material(
-                  color: Colors.transparent,
-                  child: CustomAnimatedWidget(
-                    widget: widget,
-                    dialogConfig: dialogConfig,
-                    animationType: dialogConfig.animationType,
-                    onDismissal: () {
-                      int index = DialogHandler.dialogMemory()
-                          .getDialogIndex(value: dialogConfig);
-                      dismissDialog(
-                        // dialogConfigToDelete: dialogConfig,
-                        dialogConfigIndexToDelete: index,
-                      );
-                    },
+                if (dialogConfig.animationType != null)
+                  Material(
+                    color: Colors.transparent,
+                    child: CustomAnimatedWidget(
+                      widget: widget,
+                      dialogConfig: dialogConfig,
+                      animationType: dialogConfig.animationType,
+                      onDismissal: () {
+                        int index = DialogHandler.dialogMemory()
+                            .getDialogIndex(value: dialogConfig);
+                        dismissDialog(
+                          // dialogConfigToDelete: dialogConfig,
+                          dialogConfigIndexToDelete: index,
+                        );
+                      },
+                    ),
                   ),
-                ),
+                if (dialogConfig.animationType == null)
+                  Material(
+                    color: Colors.transparent,
+                    child: CustomWidget(
+                      widget: widget,
+                      dialogConfig: dialogConfig,
+                      onDismissal: () {
+                        int index = DialogHandler.dialogMemory()
+                            .getDialogIndex(value: dialogConfig);
+                        dismissDialog(
+                          // dialogConfigToDelete: dialogConfig,
+                          dialogConfigIndexToDelete: index,
+                        );
+                      },
+                    ),
+                  ),
               ],
             );
           },

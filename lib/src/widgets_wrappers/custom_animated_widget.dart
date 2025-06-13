@@ -65,8 +65,7 @@ class _CustomAnimatedWidgetState extends State<CustomAnimatedWidget>
       vsync: this,
       duration: widget.dialogConfig.animationDuration ??
           const Duration(milliseconds: 1200),
-      reverseDuration: widget.dialogConfig.animationReverseDuration ??
-          const Duration(milliseconds: 550),
+      reverseDuration: widget.dialogConfig.animationReverseDuration,
     );
     _animationController.addStatusListener(
       (status) {
@@ -79,6 +78,8 @@ class _CustomAnimatedWidgetState extends State<CustomAnimatedWidget>
                 }
               }
             });
+          }else{
+            _animationController.reverse();
           }
         }
         if (status == AnimationStatus.dismissed) {
