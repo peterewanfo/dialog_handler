@@ -262,7 +262,7 @@ class _DialogManagerState extends State<DialogManager> {
             pageBuilder: (context, __, ___) {
               if (dialogConfig.animationType != null) {
                 return Material(
-                  color: Colors.black.withOpacity(.45),
+                  color: Colors.black.withValues(alpha: 0.45),
                   child: Column(
                     children: [
                       Expanded(
@@ -284,7 +284,7 @@ class _DialogManagerState extends State<DialogManager> {
                 );
               } else {
                 return Material(
-                  color: Colors.black.withOpacity(.45),
+                  color: Colors.black.withValues(alpha: 0.45),
                   child: Column(
                     children: [
                       Expanded(
@@ -371,24 +371,6 @@ class _DialogManagerState extends State<DialogManager> {
 
         DialogHandler.dialogMemory()
             .update(preValue: dialogConfig, newValue: idialogConfig);
-
-      default:
-        return await showDialog(
-          context: context,
-          builder: (context) {
-            return const Text("Dialog Config does not exist");
-          },
-        ).then(
-          (value) async {
-            if (value == null) {
-              if (dialogConfig.autoDismissalDuration == null) {
-                dismissDialog(
-                  isDialogSelfDismissed: true,
-                );
-              }
-            }
-          },
-        );
     }
   }
 

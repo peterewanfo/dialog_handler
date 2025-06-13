@@ -490,17 +490,6 @@ class _MyHomePageState extends State<MyHomePage> {
                       widget: const ErrorDialogWidgetExample(),
                       autoDismissalDuration: const Duration(seconds: 2),
                     );
-                    Future.delayed(const Duration(seconds: 1));
-                    DialogHandler.instance.showDialog(
-                      dialogType: DialogType.modalDialog,
-                      animationType: AnimationType.fromTopToPositionThenBounce,
-                      dialogAlignment: Alignment.topCenter,
-                      animationDuration: const Duration(milliseconds: 1400),
-                      animationReverseDuration:
-                          const Duration(milliseconds: 1400),
-                      widget: const ErrorDialogWidgetExample(),
-                      autoDismissalDuration: const Duration(seconds: 4),
-                    );
                   },
                   child: const Text(
                     'Auto Dismissal Nested Dialog Example',
@@ -551,7 +540,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                   child: const Text(
-                    'Auto Dismissal Nested Dialog Example',
+                    'USING A DIFFERENT DIALOG',
                     style: TextStyle(
                       color: Colors.white,
                     ),
@@ -589,7 +578,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
                   },
                   child: const Text(
-                    'Auto Dismissal Nested Dialog Example',
+                    'SHOW A FRESS DIALOG AFTER DISMISS OF PREV DIALOG',
                     style: TextStyle(
                       color: Colors.white,
                     ),
