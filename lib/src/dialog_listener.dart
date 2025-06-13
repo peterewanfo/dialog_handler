@@ -14,7 +14,8 @@ class DialogListener {
   }
 
   void animatedDismissalCompleted() {
-    _notifyListeners(DialogListenerKeys.completedAnimationDismissal.name);
+    removeListener(DialogListenerKeys.completedAnimationDismissal.name);
+    // _notifyListeners(DialogListenerKeys.completedAnimationDismissal.name);
     config = null;
   }
 

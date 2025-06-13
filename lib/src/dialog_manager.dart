@@ -80,9 +80,8 @@ class _DialogManagerState extends State<DialogManager> {
             dialogCompleterInstance: dMemory.dialogCompleterInstance!,
           );
           if (dMemory.dialogOverlayEntry!.mounted) {
-            // dMemory.dialogOverlayEntry?.remove();
-            dialogListener.dismissDialog(dMemory);
-            // dMemory.dialogOverlayEntry?.remove();
+            // dialogListener.dismissDialog(dMemory);
+            dMemory.dialogOverlayEntry?.remove();
           }
         }
       } else {
@@ -93,8 +92,8 @@ class _DialogManagerState extends State<DialogManager> {
                 dMemory.dialogCompleterInstance!, //dialogInstance
           );
           if (isDialogSelfDismissed == false) {
-            dialogListener.dismissDialog(dMemory);
-            // Navigator.of(context).pop(false);
+            // dialogListener.dismissDialog(dMemory);
+            Navigator.of(context).pop(false);
           }
         }
       }

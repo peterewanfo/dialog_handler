@@ -233,6 +233,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.fromTopToPosition,
                       animationDuration: const Duration(milliseconds: 300),
+                      animationReverseDuration: const Duration(milliseconds: 900),
                       widget: const ModalDialogWidget(),
                     );
                   },
@@ -562,7 +563,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     );
 
                     await Future.delayed(const Duration(seconds: 2));
-                    await DialogHandler.instance.dismissDialog();
+                    DialogHandler.instance.dismissDialog();
 
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.bottomSheetDialog,

@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../models/_export_.dart';
@@ -20,13 +19,14 @@ class CustomWidget extends StatefulWidget {
   State<CustomWidget> createState() => _CustomWidgetState();
 }
 
-class _CustomWidgetState extends State<CustomWidget>
-    with SingleTickerProviderStateMixin {
-  Timer? _timer;
+class _CustomWidgetState extends State<CustomWidget> {
+  // late final AnimationController _animationController;
+  // Timer? _timer;
 
   @override
   void initState() {
     super.initState();
+
     dialogListener.addListener(
       DialogListenerKeys.dismissDialog.name,
       () {
@@ -37,7 +37,8 @@ class _CustomWidgetState extends State<CustomWidget>
 
   @override
   void dispose() {
-    _timer?.cancel();
+    // _timer?.cancel();
+    // _animationController.dispose();
     dialogListener.removeListener(DialogListenerKeys.dismissDialog.name);
     super.dispose();
   }
