@@ -22,7 +22,6 @@ class CustomWidget extends StatefulWidget {
 
 class _CustomWidgetState extends State<CustomWidget>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
   Timer? _timer;
 
   @override
@@ -39,7 +38,6 @@ class _CustomWidgetState extends State<CustomWidget>
   @override
   void dispose() {
     _timer?.cancel();
-    _animationController.dispose();
     dialogListener.removeListener(DialogListenerKeys.dismissDialog.name);
     super.dispose();
   }
