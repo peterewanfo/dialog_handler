@@ -114,6 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.modalDialog,
+                      autoDismissalDuration: null,
                       widget: const ModalDialogWidget(),
                     );
                   },

@@ -201,7 +201,7 @@ class _DialogManagerState extends State<DialogManager> {
                 child: InkWell(
                   onTap: () {
                     if (dialogConfig.autoDismissalDuration == null) {
-                      dialogListener.dismissDialog(dialogConfig);
+                      dismissDialog(dialogConfigToDelete: dialogConfig);
                     }
                   },
                   child: Stack(
