@@ -13,5 +13,8 @@
 
 ## 1.0.1+2
 
+## 1.0.1+3
+* fixed bug with dialog dismissal not responsive
+
 * re-fixed bug with dialog dismissal delay
 * removed mandatory use of handler's custom animated widget to show new dialog. This cause slight during dialog dismissal
