@@ -61,12 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   height: 10,
                 ),
 
-                const Text(
-                  "=============DIALOGS EXAMPLE============",
-                  style: TextStyle(
-                    color: Colors.blue,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                InkWell(
+                  onTap: () {},
+                  child: const Text(
+                    "=============DIALOGS EXAMPLEaa============",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 const SizedBox(
@@ -80,17 +83,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
-                      dialogType: DialogType.bottomSheetDialog,
+                      dialogType: DialogType.overlayDialog,
+                      onlyDismissProgrammatically: false,
                       widget: InkWell(
-                        onTap: () async {
-                          await DialogHandler.instance.showDialog(
-                            dialogType: DialogType.bottomSheetDialog,
-                            widget: Container(
-                              height: 200,
-                              color: Colors.blue,
-                            ),
-                          );
-                        },
+                        onTap: () async {},
                         child: const BottomSheetDialogWidget(),
                       ),
                     );
@@ -234,7 +230,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       dialogType: DialogType.modalDialog,
                       animationType: AnimationType.fromTopToPosition,
                       animationDuration: const Duration(milliseconds: 300),
-                      animationReverseDuration: const Duration(milliseconds: 900),
+                      animationReverseDuration:
+                          const Duration(milliseconds: 900),
                       widget: const ModalDialogWidget(),
                     );
                   },
@@ -554,7 +551,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     backgroundColor: Colors.pink,
                   ),
                   onPressed: () async {
-
                     DialogHandler.instance.showDialog(
                       dialogType: DialogType.overlayDialog,
                       autoDismissWithAnimation: false,

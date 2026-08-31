@@ -18,3 +18,9 @@
 
 * re-fixed bug with dialog dismissal delay
 * removed mandatory use of handler's custom animated widget to show new dialog. This cause slight during dialog dismissal
+
+## 1.0.2
+* fixed bug with dialog not dismissable using android back button
+* added `visibleDialogs` method that returns a list of currently visible dialogs
+* updated documentation to include `visibleDialogs` method
+* include tests coverage for dialog handler 

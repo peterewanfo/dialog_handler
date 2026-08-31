@@ -12,8 +12,7 @@ class FullpageDialogWidget extends StatelessWidget {
       width: 400,
       child: InkWell(
         onTap: () {
-          DialogHandler.instance
-              .dismissDialog(dismissalResponseData: {
+          DialogHandler.instance.dismissDialog(dismissalResponseData: {
             "data": "Hello World",
           });
         },

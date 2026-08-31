@@ -107,6 +107,11 @@ class DialogHandler {
   }) {
     dialogCompleterInstance.complete(responseData);
   }
+
+  /// Returns a list of dialog configurations currently visible on the screen.
+  List<DialogConfig> visibleDialogs() {
+    return List<DialogConfig>.from(_dialogMemory.allItems);
+  }
 }
 
 /// To keep record of dialogs on display, important for nexted dialogs

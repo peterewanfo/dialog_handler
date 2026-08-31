@@ -1,3 +1,4 @@
+import 'package:dialog_handler/dialog_handler.dart';
 import 'package:flutter/material.dart';
 
 class BottomSheetDialogWidget extends StatelessWidget {
@@ -5,10 +6,15 @@ class BottomSheetDialogWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      height: 600,
-      width: double.infinity,
+    return InkWell(
+      onTap: () {
+        DialogHandler.instance.dismissDialog();
+      },
+      child: Container(
+        color: Colors.pink,
+        height: 600,
+        width: double.infinity,
+      ),
     );
   }
 }

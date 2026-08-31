@@ -64,6 +64,10 @@ class _DialogManagerState extends State<DialogManager> {
 
     if (dialogConfigToDelete != null) {
       dMemory = dialogConfigToDelete;
+      int index = dialogMemory.getDialogIndex(value: dialogConfigToDelete);
+      if (index >= 0) {
+        dialogMemory.popAtIndex(index);
+      }
     } else {
       if (dialogConfigIndexToDelete != null && dialogConfigIndexToDelete >= 0) {
         dMemory = dialogMemory.popAtIndex(dialogConfigIndexToDelete);
@@ -129,12 +133,18 @@ class _DialogManagerState extends State<DialogManager> {
         );
       }
     }
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   void showDialogContent({
     required Widget widget,
     required DialogConfig dialogConfig,
   }) async {
+    if (mounted) {
+      setState(() {});
+    }
     switch (dialogConfig.dialogType) {
       case DialogType.bottomSheetDialog:
         if (mounted) {
@@ -375,6 +385,19 @@ class _DialogManagerState extends State<DialogManager> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return PopScope(
+      canPop: _dialogHandler.visibleDialogs().isEmpty,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
+        final visible = _dialogHandler.visibleDialogs();
+        if (visible.isNotEmpty) {
+          final topDialog = visible.last;
+          if (!topDialog.onlyDismissProgrammatically) {
+            await _dialogHandler.dismissDialog();
+          }
+        }
+      },
+      child: widget.child,
+    );
   }
 }
