@@ -110,9 +110,34 @@ class _DialogManagerState extends State<DialogManager> {
     bool isDialogSelfDismissed = false,
     DialogConfig? dialogConfigToDelete,
     int? dialogConfigIndexToDelete,
+    ValueKey<String>? valueKey,
   }) {
     DialogStack<DialogConfig> dialogMemory = DialogHandler.dialogMemory();
     int totalAvailableDialogs = dialogMemory.allItems.length;
+
+    if (valueKey != null) {
+      /// DISMISS ONLY THE DIALOG CARRYING THIS KEY
+      ///
+      /// Resolve against the configs held in memory rather than the caller's
+      /// copy: an overlay dialog's config is swapped for one carrying its
+      /// `dialogOverlayEntry` once shown, and that entry is what gets removed.
+      int index = dialogMemory.allItems
+          .indexWhere((config) => config.valueKey == valueKey);
+
+      /// Nothing to do when no visible dialog carries the key
+      if (index < 0) return;
+
+      _singleDialogDismiss(
+        dismissalResponseData: dismissalResponseData,
+        isDialogSelfDismissed: isDialogSelfDismissed,
+        dialogConfigIndexToDelete: index,
+      );
+
+      if (mounted) {
+        setState(() {});
+      }
+      return;
+    }
 
     if (dismissAllDialog) {
       /// LOOP THROUGH ALL AVAILABLE DIALOG TO DISMISS

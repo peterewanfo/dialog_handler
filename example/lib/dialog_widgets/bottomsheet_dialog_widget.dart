@@ -14,6 +14,8 @@ class BottomSheetDialogWidget extends StatelessWidget {
         color: Colors.pink,
         height: 600,
         width: double.infinity,
+        child: Text(
+            'is dialog visible:  ${DialogHandler.instance.isDialogVisible(const ValueKey<String>("bottomSheetDialog"))}'),
       ),
     );
   }

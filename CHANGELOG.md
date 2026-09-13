@@ -24,3 +24,10 @@
 * added `visibleDialogs` method that returns a list of currently visible dialogs
 * updated documentation to include `visibleDialogs` method
 * include tests coverage for dialog handler 
+
+## 1.0.3
+* added `isDialogVisible` method that returns a boolean indicating whether a dialog with the given valueKey is currently visible
+* added `valueKey` parameter to `showDialog` method that is used to identify the dialog
+* added `valueKey` parameter to `dismissDialog` method to dismiss dialog by key
+
+* updated documentation to include `isDialogVisible` method

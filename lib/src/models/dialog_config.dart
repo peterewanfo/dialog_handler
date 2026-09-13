@@ -1,9 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:dialog_handler/dialog_handler.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/_export_.dart';
 
 /// To hold configurations of dialog instance on display.
 ///
@@ -20,11 +19,22 @@ import '../utils/_export_.dart';
 ///
 /// [backgroundWidget] to specify widget to be displayed on dialog background.
 ///
+/// [valueKey] identifies this dialog instance. It is optional for the caller,
+/// and a randomly generated key is assigned when none is supplied, so every
+/// config is always uniquely addressable.
+///
 /// [animationType] specifies the type of appearance and dismissal animation for a dialog on display
 /// `animationType` can be: fadeFromTopToPosition, fadeFromBottomToPosition, fadeFromLeftToPosition, fadeFromRightToPosition, scaleToPosition, fromRightToPosition,
 /// fromLeftToPosition, fromBottomToPosition, fromTopToPosition, fromTopToPositionThenBounce, fromBottomToPositionThenBounce,
 ///
 class DialogConfig {
+  static final Random _random = Random();
+
+  /// Identifies this dialog instance.
+  ///
+  /// Supplied by the caller, or randomly generated when omitted. Use it to
+  /// recognise a specific dialog among [DialogHandler.visibleDialogs].
+  final ValueKey<String> valueKey;
   final bool onlyDismissProgrammatically;
   final DialogType dialogType;
   final Completer<Map<String, dynamic>>? dialogCompleterInstance;
@@ -41,6 +51,7 @@ class DialogConfig {
   DialogConfig({
     required this.onlyDismissProgrammatically,
     required this.dialogType,
+    ValueKey<String>? valueKey,
     this.dialogCompleterInstance,
     this.backgroundWidget,
     this.animationDuration,
@@ -51,11 +62,25 @@ class DialogConfig {
     this.autoDismissWithAnimation = true,
     this.dialogOverlayEntry,
     this.customDialogOnDisplay,
-  });
+  }) : valueKey = valueKey ?? randomValueKey();
+
+  /// Builds the fallback key used when a caller does not supply a [valueKey].
+  ///
+  /// Combines the current timestamp with a random suffix so keys stay unique
+  /// even for dialogs created within the same microsecond.
+  static ValueKey<String> randomValueKey() {
+    final String timePart =
+        DateTime.now().microsecondsSinceEpoch.toRadixString(16);
+    final String randomPart =
+        _random.nextInt(0xFFFFFFFF).toRadixString(16).padLeft(8, '0');
+
+    return ValueKey<String>('dialog_${timePart}_$randomPart');
+  }
 
   factory DialogConfig.initialize({
     required bool onlyDismissProgrammatically,
     required DialogType dialogType,
+    ValueKey<String>? valueKey,
     Widget? backgroundWidget,
     Duration? animationDuration,
     Duration? animationReverseDuration,
@@ -70,6 +95,7 @@ class DialogConfig {
     return DialogConfig(
       onlyDismissProgrammatically: onlyDismissProgrammatically,
       dialogType: dialogType,
+      valueKey: valueKey,
       dialogCompleterInstance: Completer<Map<String, dynamic>>(),
       backgroundWidget: backgroundWidget,
       animationDuration: animationDuration,
@@ -86,6 +112,7 @@ class DialogConfig {
   DialogConfig copyWith({
     bool? onlyDismissProgrammatically,
     DialogType? dialogType,
+    ValueKey<String>? valueKey,
     Widget? backgroundWidget,
     Duration? animationDuration,
     Duration? animationReverseDuration,
@@ -102,6 +129,7 @@ class DialogConfig {
       onlyDismissProgrammatically:
           onlyDismissProgrammatically ?? this.onlyDismissProgrammatically,
       dialogType: dialogType ?? this.dialogType,
+      valueKey: valueKey ?? this.valueKey,
       dialogCompleterInstance:
           dialogCompleterInstance ?? this.dialogCompleterInstance,
       backgroundWidget: backgroundWidget ?? this.backgroundWidget,

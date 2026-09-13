@@ -84,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.overlayDialog,
+                      valueKey: const ValueKey<String>('bottomSheetDialog'),
                       onlyDismissProgrammatically: false,
                       widget: InkWell(
                         onTap: () async {},

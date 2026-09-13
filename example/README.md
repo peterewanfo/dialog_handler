@@ -1,127 +1,64 @@
-# Dialog Handler
+# Dialog Handler — Example App
 
-A Flutter package that helps simplify the use of dialogs. 
+A runnable Flutter app demonstrating every feature of the [`dialog_handler`](../README.md) package.
 
-# Why use dialog handler?
-As your app grows, with multiple dialogs implemented in your app, you will need a way to handle, display and dismiss all variations of dialogs and overlays based on the following cases.
+## Running it
 
-* You want to display dialog directly from your business layer without passing context
-* You dont just want your dialog/overlays to appear plain but instead apear animated.
-* After you dismiss a dialog, you want to return transaction responses to the dialog caller object.
-* You want nested dialogs (ability to open another dialog from a dialog) without closing the previous dialog.
-* You need to easily mock messages in business logic that appears in dialogs.
-* You want to autodismiss a dialog after a Duration
-
-These are use cases that will require you to use this package. Below you will find a handfull of examples that may suite your need.
-
-
-## Getting Started
-
-Note: It's best to register the instance of Dialog Handler with a service locator, preferrably `GetIt`.
-
-## Installation
-
-Run this command:
-
-With Flutter:
-
-
-```
-flutter pub add dialog_handler
+```bash
+cd example
+flutter pub get
+flutter run
 ```
 
-This will add a line like this to your package's pubspec.yaml (and run an implicit `flutter pub get`):
+The example depends on the local package via a path override, so any change you make in `../lib` is picked up on the next run or hot restart.
 
+## What's in here
 
-```
-dependencies:
-    dialog_handler: ^1.0.0
-```
+The home screen is a single scrolling list of buttons, grouped by the feature each one demonstrates.
 
-## Register Dialog Handler Instance
+### Dialog types
 
-To register Dialog Handler instance using getIt, see below
+| Button | Demonstrates |
+|---|---|
+| Show BottomSheet Dialog | An `overlayDialog` that reports its own visibility with `isDialogVisible`, keyed `bottomSheetDialog` |
+| Show Modal Dialog | A plain `modalDialog` |
+| Show Modal Dialog With Background | `backgroundWidget` with a `glass_kit` blur for a frosted backdrop |
+| Show FullPage Dialog | A `pageDialog` that dismisses on tap |
 
-```
-import 'package:get_it/get_it.dart';
+### Animations
 
-GetIt locator = GetIt.instance;
+Each button shows a `modalDialog` with a different `AnimationType` — `scaleToPosition`, `fromTopToPosition` (centered and top aligned), `fromBottomToPosition`, `fromLeftToPosition` and `fromRightToPosition` — with `animationDuration` and `animationReverseDuration` varied to show their effect.
 
-locator.registerLazySingleton<DialogHandler>(
-    () => DialogHandler.instance,
-);
+### Error dialogs
 
-```
+Top aligned banner style dialogs, including a bouncing variant using `fromTopToPositionThenBounce`, and an `overlayDialog` version that leaves the page behind it interactive.
 
+### Auto dismissal
 
-## Using Dialog Handler in Details
+Dialogs that close themselves after `autoDismissalDuration`, including a nested case where a second dialog is opened while the first is still counting down.
 
-Let's say I have the widget below to show in a dialog
-```
-import 'package:flutter/material.dart';
+### Other
 
-class SampleDialogWidget extends StatelessWidget {
-  const SampleDialogWidget({super.key});
+| Button | Demonstrates |
+|---|---|
+| USING A DIFFERENT DIALOG | `customDialog` wrapping `showCupertinoModalBottomSheet` from `modal_bottom_sheet`, so a third party dialog is still tracked by the handler |
+| SHOW A FRESH DIALOG AFTER DISMISS OF PREV DIALOG | Sequencing — dismissing an overlay, then awaiting a bottom sheet that returns data |
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.red,
-      height: 300,
-      width: double.infinity,
-    );
-  }
-}
-```
+## Where to look in the source
 
-To show this a dialog with `SimpleDialogWidget`, see below
+| File | Contents |
+|---|---|
+| [`lib/main.dart`](lib/main.dart) | Every example, and the `DialogManager` that hosts them |
+| [`lib/dialog_widgets/`](lib/dialog_widgets/) | The dialog bodies — plain widgets, no base class required |
+| [`lib/extension.dart`](lib/extension.dart) | A small `InkWell` helper used to strip splash effects |
 
-```
-await locator<DialogHandler>().showDialog(
-    dialogType: DialogType.modalDialog,
-    animationType: AnimationType.fromTopToPosition,
-    animationDuration: const Duration(milliseconds: 300),
-    widget: const ModalDialogWidget(),
-);
-```
+## Third party packages used
 
-`dialogType` can be any of the following:
-* bottomSheetDialog
-* modalDialog,
-* overlayDialog,
+Only for the demos — none of these are required by `dialog_handler` itself:
 
-`animationType` can be any of the following:
-* fadeFromTopToPosition
-* fadeFromBottomToPosition,
-* fadeFromLeftToPosition,
-* fadeFromRightToPosition,
-* scaleToPosition,
-* fromRightToPosition,
-* fromLeftToPosition,
-* fromBottomToPosition,
-* fromTopToPosition,
-* fromTopToPositionThenBounce,
-* fromBottomToPositionThenBounce,
+- [`glass_kit`](https://pub.dev/packages/glass_kit) — the blurred `backgroundWidget`
+- [`modal_bottom_sheet`](https://pub.dev/packages/modal_bottom_sheet) — the `customDialog` demo
 
-`animationDuration` is nullable or a Duration object that controls animation display duration
+## Full documentation
 
-`animationReverseDuration` is nullable or a Duration object that controls animation reverse duration
-
-`backgroundWidget` is either nullable or widget that will display at the background of any dialog on display. With this, we can build a blur background dialog. example below
-
-```
-await locator<DialogHandler>().showDialog(
-  dialogType: DialogType.modalDialog,
-  widget: const ModalDialogWithBlurWidget(),
-  backgroundWidget: GlassContainer.clearGlass(
-    borderWidth: 0,
-    blur: 7,
-  ),
-);
-
-```
-
-### Contribution
-If you wish to contribute to this boilerplate project, please feel free to submit an issue and/or pull request.
-
-Thanks for your time.
+See the [package README](../README.md) for the complete API reference, recipes and behaviour notes.
