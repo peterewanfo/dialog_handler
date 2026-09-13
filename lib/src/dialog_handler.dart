@@ -162,7 +162,7 @@ class DialogStack<T> {
 
   T? pop() => (isEmpty) ? null : _list.removeLast();
 
-  T? popAtIndex(index) => (isEmpty) ? null : _list.removeAt(index);
+  T? popAtIndex(int index) => (isEmpty) ? null : _list.removeAt(index);
 
   T? get peek => (isEmpty) ? null : _list.last;
 

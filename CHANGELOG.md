@@ -31,3 +31,5 @@
 * added `valueKey` parameter to `dismissDialog` method to dismiss dialog by key
 
 * updated documentation to include `isDialogVisible` method
+
+## 1.0.3+1
