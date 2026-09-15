@@ -22,6 +22,7 @@ Call `showDialog(...)` from a view model, a repository, an interceptor or anywhe
 - [Android back button](#android-back-button)
 - [Animations](#animations)
 - [Auto dismissal](#auto-dismissal)
+- [Liquid glass](#liquid-glass)
 - [Nested dialogs](#nested-dialogs)
 - [Recipes](#recipes)
 - [Using a service locator](#using-a-service-locator)
@@ -175,6 +176,8 @@ Future<Map<String, dynamic>> showDialog({
   Duration? autoDismissalDuration,
   bool? autoDismissWithAnimation,
   Function(BuildContext context)? customDialogOnDisplay,
+  bool? enableLiquidGlass,
+  LiquidGlassSettings? liquidGlassSettings,
 })
 ```
 
@@ -192,6 +195,8 @@ Future<Map<String, dynamic>> showDialog({
 | `autoDismissalDuration` | `Duration?` | `null` | Hold the dialog this long after the entry animation, then dismiss it. Requires `animationType`. |
 | `autoDismissWithAnimation` | `bool?` | `null` | Currently has no effect. See [Behaviour notes](#behaviour-notes-and-limitations). |
 | `customDialogOnDisplay` | `Function(BuildContext)?` | `null` | `customDialog` only — called with a valid context so you can present your own dialog. |
+| `enableLiquidGlass` | `bool?` | `DialogManager.enableLiquidGlass` (`false`) | Draws the dialog body on a liquid glass surface. No effect on `customDialog`. See [Liquid glass](#liquid-glass). |
+| `liquidGlassSettings` | `LiquidGlassSettings?` | `DialogManager.liquidGlassSettings` | Shape, blur, saturation, tint, rim light and shadows of the glass. |
 
 Returns a `Future<Map<String, dynamic>>` that completes when the dialog is dismissed.
 
@@ -369,6 +374,72 @@ await DialogHandler.instance.showDialog(
 `autoDismissalDuration` requires an `animationType` — the timer is driven by the animation controller, so a dialog with no animation will not auto dismiss.
 
 Because `overlayDialog` leaves the page interactive, the combination above gives you a toast: it appears over the content, the user keeps scrolling, and it disappears on its own.
+
+---
+
+## Liquid glass
+
+Set `enableLiquidGlass: true` to draw the dialog body on a liquid glass surface: the content behind it is blurred and made more colourful, with a light tint, a soft sheen and a bright rim where light catches the edge. It is off by default and needs no extra dependency.
+
+```dart
+await DialogHandler.instance.showDialog(
+  dialogType: DialogType.modalDialog,
+  enableLiquidGlass: true,
+  widget: const Padding(
+    padding: EdgeInsets.all(24),
+    child: Text('Hello from behind the glass'),
+  ),
+);
+```
+
+The glass only shows through where your widget is transparent, so **don't give the dialog body an opaque background colour**. It sits inside the entry animation, so it animates in and out with the dialog.
+
+Customise it with `LiquidGlassSettings`:
+
+```dart
+await DialogHandler.instance.showDialog(
+  dialogType: DialogType.bottomSheetDialog,
+  enableLiquidGlass: true,
+  liquidGlassSettings: const LiquidGlassSettings(
+    borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+    blur: 24,
+    tintColor: Color(0x33FFFFFF),
+  ),
+  widget: const MySheet(),
+);
+```
+
+| `LiquidGlassSettings` field | Default | What it does |
+|---|---|---|
+| `borderRadius` | `BorderRadius.circular(24)` | Shape of the glass. Round only the top corners for bottom sheets. |
+| `blur` | `18` | Backdrop blur sigma. |
+| `saturation` | `1.6` | Saturation multiplier for the backdrop. `1` disables it. |
+| `tintColor` | `Color(0x1FFFFFFF)` | Translucent colour over the backdrop. Use a dark tint for dark themes. |
+| `borderWidth` | `1.2` | Width of the rim. `0` removes it. |
+| `highlightOpacity` | `0.6` | Strength of the rim light and sheen, `0`–`1`. |
+| `lightSource` | `Alignment.topLeft` | Side the light comes from. |
+| `shadows` | soft drop shadow | Painted outside the glass only, so they never darken it. |
+
+To turn it on for every dialog, set the default on `DialogManager`. A dialog can still opt out with `enableLiquidGlass: false`:
+
+```dart
+DialogManager(
+  enableLiquidGlass: true,
+  liquidGlassSettings: const LiquidGlassSettings(blur: 20),
+  child: const HomePage(),
+)
+```
+
+The `LiquidGlass` widget is exported too, if you want the same surface elsewhere:
+
+```dart
+LiquidGlass(
+  settings: const LiquidGlassSettings(),
+  child: const Padding(padding: EdgeInsets.all(16), child: Text('Glass')),
+)
+```
+
+> **Note:** the effect is built from a backdrop blur and painted highlights. It gives a glass look but does not bend the content behind it like a real lens. Backdrop blurs cost GPU time, so avoid stacking many glass dialogs at once on low end devices.
 
 ---
 
@@ -570,7 +641,7 @@ testWidgets('shows and dismisses a dialog', (tester) async {
 
 | Member | Description |
 |---|---|
-| `DialogManager({required Widget child})` | Wraps your app, registers the show and dismiss listeners, and hosts the `PopScope` that handles the Android back button. |
+| `DialogManager({required Widget child, bool enableLiquidGlass = false, LiquidGlassSettings? liquidGlassSettings})` | Wraps your app, registers the show and dismiss listeners, and hosts the `PopScope` that handles the Android back button. `enableLiquidGlass` and `liquidGlassSettings` set the liquid glass defaults for every dialog. |
 
 ### `DialogConfig`
 
@@ -591,6 +662,8 @@ The record of one dialog. You mostly receive these from `visibleDialogs()`.
 | `autoDismissWithAnimation` | `bool?` | Currently unused. |
 | `dialogOverlayEntry` | `OverlayEntry?` | Set once an `overlayDialog` is on screen. |
 | `customDialogOnDisplay` | `Function(BuildContext)?` | Presenter callback for `customDialog`. |
+| `enableLiquidGlass` | `bool?` | Whether the body is drawn on liquid glass. `null` uses the `DialogManager` default. |
+| `liquidGlassSettings` | `LiquidGlassSettings?` | Liquid glass appearance. `null` uses the `DialogManager` default. |
 
 `DialogConfig` also exposes `copyWith(...)`, the `DialogConfig.initialize(...)` factory, and `DialogConfig.randomValueKey()`. `copyWith` preserves `valueKey` unless you explicitly pass a new one, so a dialog keeps its identity for its whole life.
 

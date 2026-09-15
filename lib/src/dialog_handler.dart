@@ -51,6 +51,13 @@ class DialogHandler {
   /// generated key is assigned, so a dialog can always be recognised among
   /// the configs returned by [visibleDialogs].
   ///
+  /// [enableLiquidGlass] when true, draws the dialog body on a liquid glass
+  /// surface. When null, the default set on [DialogManager] applies. Has no
+  /// effect on customDialog.
+  ///
+  /// [liquidGlassSettings] to customise the liquid glass surface, such as its
+  /// shape, blur and tint.
+  ///
   Future<Map<String, dynamic>> showDialog({
     required DialogType dialogType,
     Duration? animationDuration,
@@ -64,6 +71,8 @@ class DialogHandler {
     Duration? autoDismissalDuration,
     bool? autoDismissWithAnimation,
     Function(BuildContext context)? customDialogOnDisplay,
+    bool? enableLiquidGlass,
+    LiquidGlassSettings? liquidGlassSettings,
   }) {
     DialogConfig dialogConfig = DialogConfig.initialize(
       onlyDismissProgrammatically: onlyDismissProgrammatically ?? false,
@@ -77,6 +86,8 @@ class DialogHandler {
       autoDismissalDuration: autoDismissalDuration,
       autoDismissWithAnimation: autoDismissWithAnimation,
       customDialogOnDisplay: customDialogOnDisplay,
+      enableLiquidGlass: enableLiquidGlass,
+      liquidGlassSettings: liquidGlassSettings,
     );
 
     /// Add New Dialog to Stack

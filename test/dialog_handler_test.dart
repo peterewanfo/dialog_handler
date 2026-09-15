@@ -413,4 +413,125 @@ void main() {
     expect(DialogHandler.instance.isDialogVisible(keyA), isTrue);
     expect(find.text('Only'), findsOneWidget);
   });
+
+  group('liquid glass', () {
+    Widget buildApp({
+      required DialogType dialogType,
+      bool? enableLiquidGlass,
+      bool managerEnableLiquidGlass = false,
+      LiquidGlassSettings? liquidGlassSettings,
+    }) {
+      return MaterialApp(
+        home: DialogManager(
+          enableLiquidGlass: managerEnableLiquidGlass,
+          child: Scaffold(
+            body: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () {
+                    DialogHandler.instance.showDialog(
+                      dialogType: dialogType,
+                      enableLiquidGlass: enableLiquidGlass,
+                      liquidGlassSettings: liquidGlassSettings,
+                      widget: const Text('Glass Dialog'),
+                    );
+                  },
+                  child: const Text('Open Dialog'),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+    }
+
+    test('DialogConfig liquid glass defaults to unset and survives copyWith',
+        () {
+      final DialogConfig config = DialogConfig.initialize(
+        onlyDismissProgrammatically: false,
+        dialogType: DialogType.modalDialog,
+        dialogAlignment: AlignmentDirectional.center,
+      );
+      expect(config.enableLiquidGlass, isNull);
+      expect(config.liquidGlassSettings, isNull);
+
+      const LiquidGlassSettings settings = LiquidGlassSettings(blur: 4);
+      final DialogConfig glass = config.copyWith(
+        enableLiquidGlass: true,
+        liquidGlassSettings: settings,
+      );
+      final DialogConfig copied = glass.copyWith(
+        dialogOverlayEntry: OverlayEntry(builder: (_) => const SizedBox()),
+      );
+      expect(copied.enableLiquidGlass, isTrue);
+      expect(copied.liquidGlassSettings, same(settings));
+    });
+
+    testWidgets('dialogs are not wrapped in liquid glass by default',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(buildApp(dialogType: DialogType.modalDialog));
+      await tester.tap(find.text('Open Dialog'));
+      await tester.pumpAndSettle();
+
+      expect(find.text('Glass Dialog'), findsOneWidget);
+      expect(find.byType(LiquidGlass), findsNothing);
+      expect(find.byType(BackdropFilter), findsNothing);
+    });
+
+    for (final DialogType dialogType in [
+      DialogType.modalDialog,
+      DialogType.bottomSheetDialog,
+      DialogType.pageDialog,
+      DialogType.overlayDialog,
+    ]) {
+      testWidgets('enableLiquidGlass wraps a ${dialogType.name} body',
+          (WidgetTester tester) async {
+        const LiquidGlassSettings settings = LiquidGlassSettings(blur: 6);
+
+        await tester.pumpWidget(buildApp(
+          dialogType: dialogType,
+          enableLiquidGlass: true,
+          liquidGlassSettings: settings,
+        ));
+        await tester.tap(find.text('Open Dialog'));
+        await tester.pumpAndSettle();
+
+        final Finder glass = find.byType(LiquidGlass);
+        expect(glass, findsOneWidget);
+        expect(
+          find.descendant(of: glass, matching: find.text('Glass Dialog')),
+          findsOneWidget,
+        );
+        expect(
+          find.descendant(of: glass, matching: find.byType(BackdropFilter)),
+          findsOneWidget,
+        );
+        expect(tester.widget<LiquidGlass>(glass).settings, same(settings));
+      });
+    }
+
+    testWidgets('DialogManager default applies and a dialog can opt out',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(buildApp(
+        dialogType: DialogType.overlayDialog,
+        managerEnableLiquidGlass: true,
+      ));
+      await tester.tap(find.text('Open Dialog'));
+      await tester.pumpAndSettle();
+      expect(find.byType(LiquidGlass), findsOneWidget);
+
+      await DialogHandler.instance.dismissDialog();
+      await tester.pumpAndSettle();
+
+      await tester.pumpWidget(buildApp(
+        dialogType: DialogType.overlayDialog,
+        managerEnableLiquidGlass: true,
+        enableLiquidGlass: false,
+      ));
+      await tester.tap(find.text('Open Dialog'));
+      await tester.pumpAndSettle();
+      expect(find.text('Glass Dialog'), findsOneWidget);
+      expect(find.byType(LiquidGlass), findsNothing);
+    });
+  });
 }

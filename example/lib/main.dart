@@ -8,6 +8,7 @@ import 'package:dialog_handler/dialog_handler.dart';
 import 'package:glass_kit/glass_kit.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
+import 'dialog_widgets/liquid_glass_dialog_widget.dart';
 import 'dialog_widgets/modal_dialog_with_blur_widget.dart';
 
 void main() {
@@ -84,6 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () async {
                     await DialogHandler.instance.showDialog(
                       dialogType: DialogType.overlayDialog,
+                      enableLiquidGlass: true,
                       valueKey: const ValueKey<String>('bottomSheetDialog'),
                       onlyDismissProgrammatically: false,
                       widget: InkWell(
@@ -143,6 +145,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   child: const Text(
                     'Show Modal Dialog With Background',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                /// LIQUID GLASS MODAL DIALOG
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                  onPressed: () async {
+                    await DialogHandler.instance.showDialog(
+                      dialogType: DialogType.modalDialog,
+                      enableLiquidGlass: true,
+                      widget: const LiquidGlassDialogWidget(),
+                    );
+                  },
+                  child: const Text(
+                    'Show Liquid Glass Modal Dialog',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+
+                /// LIQUID GLASS BOTTOM SHEET DIALOG
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                  ),
+                  onPressed: () async {
+                    await DialogHandler.instance.showDialog(
+                      dialogType: DialogType.bottomSheetDialog,
+                      enableLiquidGlass: true,
+                      liquidGlassSettings: const LiquidGlassSettings(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(28),
+                        ),
+                        tintColor: Color(0x33FFFFFF),
+                      ),
+                      widget: const LiquidGlassDialogWidget(
+                        isBottomSheet: true,
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Show Liquid Glass BottomSheet Dialog',
                     style: TextStyle(
                       color: Colors.white,
                     ),

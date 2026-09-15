@@ -11,7 +11,7 @@ class BottomSheetDialogWidget extends StatelessWidget {
         DialogHandler.instance.dismissDialog();
       },
       child: Container(
-        color: Colors.pink,
+        // color: Colors.pink,
         height: 600,
         width: double.infinity,
         child: Text(

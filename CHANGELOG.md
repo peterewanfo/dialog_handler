@@ -33,3 +33,8 @@
 * updated documentation to include `isDialogVisible` method
 
 ## 1.0.3+1
+
+## Unreleased
+* added optional liquid glass effect for dialogs, enabled with the `enableLiquidGlass` parameter on `showDialog` or app wide on `DialogManager`
+* added `liquidGlassSettings` parameter and `LiquidGlassSettings` class to customise shape, blur, saturation, tint, rim light and shadows
+* exported `LiquidGlass` widget so the effect can be used on its own

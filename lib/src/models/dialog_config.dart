@@ -48,6 +48,15 @@ class DialogConfig {
   final OverlayEntry? dialogOverlayEntry;
   final Function(BuildContext context)? customDialogOnDisplay;
 
+  /// Whether the dialog body is drawn on a liquid glass surface.
+  ///
+  /// When null, the default set on [DialogManager] applies.
+  final bool? enableLiquidGlass;
+
+  /// Appearance of the liquid glass surface. When null, the settings set on
+  /// [DialogManager] apply, or [LiquidGlassSettings] defaults.
+  final LiquidGlassSettings? liquidGlassSettings;
+
   DialogConfig({
     required this.onlyDismissProgrammatically,
     required this.dialogType,
@@ -62,6 +71,8 @@ class DialogConfig {
     this.autoDismissWithAnimation = true,
     this.dialogOverlayEntry,
     this.customDialogOnDisplay,
+    this.enableLiquidGlass,
+    this.liquidGlassSettings,
   }) : valueKey = valueKey ?? randomValueKey();
 
   /// Builds the fallback key used when a caller does not supply a [valueKey].
@@ -86,6 +97,8 @@ class DialogConfig {
     Duration? animationReverseDuration,
     AnimationType? animationType,
     required AlignmentGeometry dialogAlignment,
+    bool? enableLiquidGlass,
+    LiquidGlassSettings? liquidGlassSettings,
     Duration? autoDismissalDuration,
     bool? autoDismissWithAnimation,
     OverlayEntry? dialogOverlayEntry,
@@ -106,6 +119,8 @@ class DialogConfig {
       autoDismissWithAnimation: autoDismissWithAnimation,
       dialogOverlayEntry: dialogOverlayEntry,
       customDialogOnDisplay: customDialogOnDisplay,
+      enableLiquidGlass: enableLiquidGlass,
+      liquidGlassSettings: liquidGlassSettings,
     );
   }
 
@@ -119,6 +134,8 @@ class DialogConfig {
     Completer<Map<String, dynamic>>? dialogCompleterInstance,
     AnimationType? animationType,
     AlignmentGeometry? dialogAlignment,
+    bool? enableLiquidGlass,
+    LiquidGlassSettings? liquidGlassSettings,
     Duration? autoDismissalDuration,
     bool? autoDismissWithAnimation,
     OverlayEntry? dialogOverlayEntry,
@@ -145,6 +162,8 @@ class DialogConfig {
       dialogOverlayEntry: dialogOverlayEntry ?? this.dialogOverlayEntry,
       customDialogOnDisplay:
           customDialogOnDisplay ?? this.customDialogOnDisplay,
+      enableLiquidGlass: enableLiquidGlass ?? this.enableLiquidGlass,
+      liquidGlassSettings: liquidGlassSettings ?? this.liquidGlassSettings,
     );
   }
 }

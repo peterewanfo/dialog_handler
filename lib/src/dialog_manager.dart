@@ -7,13 +7,23 @@ import 'package:flutter/material.dart';
 import 'dialog_handler.dart';
 import 'models/_export_.dart';
 import 'widgets_wrappers/custom_animated_widget.dart';
+import 'widgets_wrappers/liquid_glass.dart';
 
 class DialogManager extends StatefulWidget {
   final Widget child;
 
+  /// Default for dialogs shown without `enableLiquidGlass`
+  final bool enableLiquidGlass;
+
+  /// Default liquid glass appearance for dialogs shown without
+  /// `liquidGlassSettings`
+  final LiquidGlassSettings? liquidGlassSettings;
+
   const DialogManager({
     super.key,
     required this.child,
+    this.enableLiquidGlass = false,
+    this.liquidGlassSettings,
   });
 
   @override
@@ -170,6 +180,19 @@ class _DialogManagerState extends State<DialogManager> {
     if (mounted) {
       setState(() {});
     }
+
+    /// Wrap the body in liquid glass inside the animation wrappers, so the
+    /// glass animates together with the dialog
+    final Widget body =
+        (dialogConfig.enableLiquidGlass ?? this.widget.enableLiquidGlass)
+            ? LiquidGlass(
+                settings: dialogConfig.liquidGlassSettings ??
+                    this.widget.liquidGlassSettings ??
+                    const LiquidGlassSettings(),
+                child: widget,
+              )
+            : widget;
+
     switch (dialogConfig.dialogType) {
       case DialogType.bottomSheetDialog:
         if (mounted) {
@@ -180,7 +203,7 @@ class _DialogManagerState extends State<DialogManager> {
               builder: (context) {
                 if (dialogConfig.animationType != null) {
                   return CustomAnimatedWidget(
-                    widget: widget,
+                    widget: body,
                     dialogConfig: dialogConfig,
                     animationType: dialogConfig.animationType,
                     onDismissal: () {
@@ -193,7 +216,7 @@ class _DialogManagerState extends State<DialogManager> {
                   );
                 } else {
                   return CustomWidget(
-                    widget: widget,
+                    widget: body,
                     dialogConfig: dialogConfig,
                     onDismissal: () {
                       int index = DialogHandler.dialogMemory()
@@ -246,7 +269,7 @@ class _DialogManagerState extends State<DialogManager> {
                         dialogConfig.backgroundWidget!,
                       if (dialogConfig.animationType != null)
                         CustomAnimatedWidget(
-                          widget: widget,
+                          widget: body,
                           dialogConfig: dialogConfig,
                           animationType: dialogConfig.animationType ??
                               AnimationType.scaleToPosition,
@@ -260,7 +283,7 @@ class _DialogManagerState extends State<DialogManager> {
                         ),
                       if (dialogConfig.animationType == null)
                         CustomWidget(
-                          widget: widget,
+                          widget: body,
                           dialogConfig: dialogConfig,
                           onDismissal: () {
                             int index = DialogHandler.dialogMemory()
@@ -301,7 +324,7 @@ class _DialogManagerState extends State<DialogManager> {
                     children: [
                       Expanded(
                         child: CustomAnimatedWidget(
-                          widget: widget,
+                          widget: body,
                           dialogConfig: dialogConfig,
                           animationType: dialogConfig.animationType,
                           onDismissal: () {
@@ -323,7 +346,7 @@ class _DialogManagerState extends State<DialogManager> {
                     children: [
                       Expanded(
                           child: CustomWidget(
-                        widget: widget,
+                        widget: body,
                         dialogConfig: dialogConfig,
                         onDismissal: () {
                           int index = DialogHandler.dialogMemory()
@@ -363,7 +386,7 @@ class _DialogManagerState extends State<DialogManager> {
                   Material(
                     color: Colors.transparent,
                     child: CustomAnimatedWidget(
-                      widget: widget,
+                      widget: body,
                       dialogConfig: dialogConfig,
                       animationType: dialogConfig.animationType,
                       onDismissal: () {
@@ -380,7 +403,7 @@ class _DialogManagerState extends State<DialogManager> {
                   Material(
                     color: Colors.transparent,
                     child: CustomWidget(
-                      widget: widget,
+                      widget: body,
                       dialogConfig: dialogConfig,
                       onDismissal: () {
                         int index = DialogHandler.dialogMemory()
