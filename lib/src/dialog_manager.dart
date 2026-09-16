@@ -93,10 +93,7 @@ class _DialogManagerState extends State<DialogManager> {
             responseData: dismissalResponseData,
             dialogCompleterInstance: dMemory.dialogCompleterInstance!,
           );
-          if (dMemory.dialogOverlayEntry!.mounted) {
-            // dialogListener.dismissDialog(dMemory);
-            dMemory.dialogOverlayEntry?.remove();
-          }
+          dMemory.dialogOverlayEntry?.remove();
         }
       } else {
         if (Navigator.canPop(context)) {
